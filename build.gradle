@@ -20,3 +20,6 @@ dependencies {
 
     compile group: 'org.aeonbits.owner', name: 'owner', version: '1.0.4'
 }
+
+apply plugin:'application'
+mainClassName = "Main"
