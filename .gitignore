@@ -63,4 +63,5 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 # Custom
+index.html
 Configuration.properties
