@@ -26,7 +26,6 @@ public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
     private static final Configuration CONFIG = ConfigFactory.create(Configuration.class);
 
-    private static final String IMAGE_ID = "eu-west-1/ami-0c590f7f";
     private static final int MAX_RETRY_TIMES = 10;
 
     private static int retriedTimes;
@@ -35,7 +34,7 @@ public class Main {
         Properties overrides = new Properties();
         overrides.setProperty(AWSEC2Constants.PROPERTY_EC2_AMI_QUERY, "");
         overrides.setProperty(AWSEC2Constants.PROPERTY_EC2_CC_AMI_QUERY, "");
-        overrides.setProperty(AWSEC2Constants.PROPERTY_EC2_CC_REGIONS, "eu-west-1");
+        overrides.setProperty(AWSEC2Constants.PROPERTY_EC2_CC_REGIONS, CONFIG.getRegion());
 
         LOGGER.info("Using credentials: {}, {}", CONFIG.getAccessKeyId(),
                 hideCredentialsPart(CONFIG.getSecretAccessKey()));
@@ -71,7 +70,7 @@ public class Main {
 
     private static NodeMetadata createNode(ComputeServiceContext context) {
         Template template = context.getComputeService().templateBuilder()
-                .imageId(IMAGE_ID)
+                .imageId(CONFIG.getRegion() + "/" + CONFIG.getImageId())
                 .hardwareId(InstanceType.T2_MICRO)
                 .build();
 
