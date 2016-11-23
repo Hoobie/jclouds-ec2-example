@@ -1,4 +1,5 @@
 import com.google.common.base.Stopwatch;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Module;
 import org.aeonbits.owner.ConfigFactory;
@@ -37,7 +38,7 @@ public class Main {
         overrides.setProperty(AWSEC2Constants.PROPERTY_EC2_CC_REGIONS, "eu-west-1");
 
         LOGGER.info("Using credentials: {}, {}", CONFIG.getAccessKeyId(),
-                CONFIG.getSecretAccessKey().substring(0, CONFIG.getSecretAccessKey().length() - 5) + "*****");
+                hideCredentialsPart(CONFIG.getSecretAccessKey()));
 
         ComputeServiceContext context = ContextBuilder.newBuilder("aws-ec2")
                 .overrides(overrides)
@@ -62,6 +63,10 @@ public class Main {
             LOGGER.info("Closing context");
             context.close();
         }
+    }
+
+    private static String hideCredentialsPart(String credentials) {
+        return credentials.substring(0, credentials.length() - 14) + Strings.repeat("*", 14);
     }
 
     private static NodeMetadata createNode(ComputeServiceContext context) {
