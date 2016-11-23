@@ -36,6 +36,9 @@ public class Main {
         overrides.setProperty(AWSEC2Constants.PROPERTY_EC2_CC_AMI_QUERY, "");
         overrides.setProperty(AWSEC2Constants.PROPERTY_EC2_CC_REGIONS, "eu-west-1");
 
+        LOGGER.info("Using credentials: {}, {}", CONFIG.getAccessKeyId(),
+                CONFIG.getSecretAccessKey().substring(0, CONFIG.getSecretAccessKey().length() - 5) + "*****");
+
         ComputeServiceContext context = ContextBuilder.newBuilder("aws-ec2")
                 .overrides(overrides)
                 .credentials(CONFIG.getAccessKeyId(), CONFIG.getSecretAccessKey())
