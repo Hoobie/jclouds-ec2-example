@@ -100,7 +100,9 @@ public class Main {
 
     private static String getWebPageBody(String ipAddress) throws ConnectException {
         try {
-            return Jsoup.connect("http://" + ipAddress).get().html();
+            String url = "http://" + ipAddress;
+            LOGGER.debug("Connecting {}", url);
+            return Jsoup.connect(url).get().html();
         } catch (IOException e) {
             if (++retriedTimes < MAX_RETRY_TIMES) {
                 sleep(5000);
